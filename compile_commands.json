@@ -1,0 +1,50 @@
+[
+  {
+    "file": "src/Icon.c",
+    "arguments": [
+      "/usr/bin/clang",
+      "-c",
+      "-o",
+      "build/Icon.o",
+      "src/Icon.c",
+      "-I",
+      "include",
+      "-Wall",
+      "-Wextra"
+    ],
+    "directory": "/home/neon1246/Documents/stuff/code/c/rps",
+    "output": "build/Icon.o"
+  },
+  {
+    "file": "src/Vector.c",
+    "arguments": [
+      "/usr/bin/clang",
+      "-c",
+      "-o",
+      "build/Vector.o",
+      "src/Vector.c",
+      "-I",
+      "include",
+      "-Wall",
+      "-Wextra"
+    ],
+    "directory": "/home/neon1246/Documents/stuff/code/c/rps",
+    "output": "build/Vector.o"
+  },
+  {
+    "file": "src/main.c",
+    "arguments": [
+      "/usr/bin/clang",
+      "-c",
+      "-o",
+      "build/main.o",
+      "src/main.c",
+      "-I",
+      "include",
+      "-Wall",
+      "-Wextra"
+    ],
+    "directory": "/home/neon1246/Documents/stuff/code/c/rps",
+    "output": "build/main.o"
+  }
+]
