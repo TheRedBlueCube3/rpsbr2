@@ -4,8 +4,10 @@
 #include <math.h>
 #include <stdio.h>
 
-void ICO_Update(Icon *icon, float deltaTime, int windowWidth, int windowHeight, Icon* otherIcons, int otherIconsCount)
+void ICO_Update(Icon *icon, float deltaTime, int windowWidth, int windowHeight, Icon* otherIcons, int otherIconsCount, BOOL infectionMode)
 {
+    int iconSize = windowWidth / 20.0f;
+    float killRadius = iconSize / 2.0f * iconSize / 2.0f;
     // check neighbors
 
     if(icon->m_bDead) return;
@@ -47,9 +49,15 @@ void ICO_Update(Icon *icon, float deltaTime, int windowWidth, int windowHeight, 
                 break;
             case R_AT:
                 // kill it if it's in our killradius
-                if(distances[i].dist2 < ICO_KILL_RADIUS)
+                if(distances[i].dist2 < killRadius)
                 {
-                    other->m_bDead = TRUE;
+                    if(infectionMode)
+                    {
+                        other->m_iAlignment = icon->m_iAlignment;
+                    }
+                    else {
+                        other->m_bDead = TRUE;
+                    }
                 }
                 break;
             case R_FL:
@@ -58,7 +66,7 @@ void ICO_Update(Icon *icon, float deltaTime, int windowWidth, int windowHeight, 
                     icon->m_vecAcceleration, 
                     VEC_Mult(VEC_InvSquare(thisPosition, 
                                   other->m_vecPosition, 
-                                  otherDistance), ICO_MAX_FORCE));
+                                  otherDistance), ICO_MAX_FORCE * 10));
                 break;               
         }
     }
@@ -73,7 +81,7 @@ void ICO_Update(Icon *icon, float deltaTime, int windowWidth, int windowHeight, 
     // apply the deltatimes
     icon->m_vecAcceleration = VEC_Limit(icon->m_vecAcceleration, ICO_MAX_FORCE);
     icon->m_vecVelocity = VEC_Add(icon->m_vecVelocity, VEC_Mult(icon->m_vecAcceleration, deltaTime));
-    icon->m_vecVelocity = VEC_Limit(icon->m_vecVelocity, ICO_MAX_SPEED);
+    icon->m_vecVelocity = VEC_Mult(VEC_Limit(icon->m_vecVelocity, ICO_MAX_SPEED), 1 - ICO_FRICTION);
     icon->m_vecPosition = VEC_Add(icon->m_vecPosition, VEC_Mult(icon->m_vecVelocity, deltaTime));
 
     // do some edge detection wraparound

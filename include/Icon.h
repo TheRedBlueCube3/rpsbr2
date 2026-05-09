@@ -5,7 +5,7 @@
 
 #define ICO_MAX_FORCE 50.0f
 #define ICO_MAX_SPEED 100.0f
-#define ICO_KILL_RADIUS 256.0f
+#define ICO_FRICTION 0.001f
 
 typedef enum
 {
@@ -37,7 +37,7 @@ typedef struct
     float dist2;
 } DistanceMetric;
 
-void ICO_Update(Icon* icon, float deltaTime, int windowWidth, int windowHeight, Icon* otherIcons, int otherIconsCount);
+void ICO_Update(Icon* icon, float deltaTime, int windowWidth, int windowHeight, Icon* otherIcons, int otherIconsCount, BOOL infectionMode);
 void ICO_FindNeighboringIcons(Icon* icon, Icon* otherIcons, DistanceMetric* distances, int iconSize);
 
 Relationship ICO_Relationship(IconType thisType, IconType otherType);

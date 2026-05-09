@@ -15,8 +15,9 @@ int main(int argc, char **argv)
     int iconCount = 100;
     int winWidth = 640;
     int winHeight = 480;
+    BOOL infection = FALSE;
 
-    while((opt = getopt(argc, argv, "c:w:h:")) != -1)
+    while((opt = getopt(argc, argv, "ic:w:h:")) != -1)
     {
         switch(opt)
         {
@@ -57,6 +58,11 @@ int main(int argc, char **argv)
                 {
                     exit(1);
                 }
+                break;
+            }
+            case 'i':
+            {
+                infection = TRUE;
                 break;
             }
             case '?':
@@ -143,7 +149,7 @@ int main(int argc, char **argv)
         for(int i = 0; i < iconCount; i++)
         {
             if(icons[i].m_bDead) continue;
-            ICO_Update(&icons[i], dt, winWidth, winHeight, icons, iconCount);
+            ICO_Update(&icons[i], dt, winWidth, winHeight, icons, iconCount, infection);
 
             SDL_FRect dst = {icons[i].m_vecPosition.x - 16, icons[i].m_vecPosition.y - 16, winWidth/20.0f, winWidth/20.0f};
             SDL_Texture* requiredTexture;
